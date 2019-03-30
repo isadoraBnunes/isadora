@@ -1,0 +1,24 @@
+          };
+            break;
+        case ActionTypes.GET_SEARCH_SUGGESTIONS:
+            retFunc = function retFunc() {
+                var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+                var cond = behaviour.c ? new _Condition2.default(behaviour.c) : null;
+                if (!(cond === null || cond && cond.check(args, behaviour, self))) return;
+                var suggestUrlType = args.suggestUrlType || behaviour.suggestUrlType || false;
+                var suggestUrl = self.search.getSuggestParam(self.search.getEngineIdByIndex(self.search.getTempOrCurrentSearchEngineIndex()), suggestUrlType, 'url');
+                if (!suggestUrl) return;
+                var query = (args.text || '').trim();
+                if (query === self.state.query) {
+                    return;
+                }
+                var resetSuggest = function resetSuggest() {
+                    self.setState({
+                        rows: [],
+                        reset: true
+                    });
+                };
+                if (!query) {
+                    resetSuggest();
+                    retur
